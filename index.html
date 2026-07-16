@@ -5,39 +5,38 @@
   <title>Smart AiPS • Intelligent Automation</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-    
-    body {
-        font-family: 'Inter', system_ui, sans-serif;
-    }
-    .heading-font {
-        font-family: 'Space Grotesk', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-    }
-    .section-header {
-        font-size: 2.75rem;
-        line-height: 1.1;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-    }
-
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+       
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+       
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
         .nav-link {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+       
         .nav-link:hover {
             color: #00f0ff;
             transform: translateY(-1px);
         }
-
         .service-card {
             transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
-        
+       
         .service-card::before {
             content: '';
             position: absolute;
@@ -50,43 +49,38 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        
+       
         .service-card:hover {
             transform: translateY(-12px) scale(1.02);
             box-shadow: 0 30px 60px -10px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(0, 240, 255, 0.1);
             border-color: rgba(0, 240, 255, 0.3);
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 240, 255, 0.02) 100%);
         }
-        
+       
         .service-card:hover::before {
             opacity: 1;
         }
-
         .gradient-text {
             background: linear-gradient(90deg, #00f0ff, #00ff9d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .logo-glow {
             filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.35));
         }
-
         .modern-button {
             transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
         }
-        
+       
         .modern-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgb(0 240 255 / 0.2), 0 4px 6px -4px rgb(0 240 255 / 0.2);
         }
-
         .process-step {
             transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
-
         .process-step::after {
             content: '';
             position: absolute;
@@ -99,29 +93,24 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-
         .process-step:hover {
             transform: translateY(-10px);
             box-shadow: 0 25px 50px -12px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(0, 240, 255, 0.15);
             border-color: rgba(0, 240, 255, 0.4);
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.04) 0%, rgba(0, 255, 157, 0.02) 100%);
         }
-
         .process-step:hover::after {
             opacity: 1;
         }
-
         .nav-scrolled {
             background-color: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(12px);
         }
-
         .feature-card {
             transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
-
         .feature-card::before {
             content: '';
             position: absolute;
@@ -134,59 +123,24 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px -8px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.1);
             border-color: rgba(0, 240, 255, 0.3);
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 100%);
         }
-
         .feature-card:hover::before {
             opacity: 1;
         }
-
         .stat-box {
             transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             position: relative;
         }
-
         .stat-box:hover {
             transform: translateY(-2px);
         }
-
         .stat-box:hover > div:first-child {
             color: #00f0ff;
-        }
-
-        .feature-card {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at top left, rgba(0, 240, 255, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -8px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 100%);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
         }
     </style>
   <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
@@ -194,25 +148,39 @@
   <script src="/_sdk/e3937a0574eb2d69.data_sdk.js" type="text/javascript" integrity="sha512-xbp/ACqEQy1aDxYMtXTrR3y5MUbzxuggRR/9sD48Gl4VhLMMCiAHsxMaFV6DTdeBpR6ymF+t2zhPKYkWM3+Jfw=="></script>
   <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
  </head>
- <body data-template-id="__page-root" class="bg-[#0A0A0F] text-white" style="background: rgb(10, 10, 15);"><!-- NAVIGATION -->
+ <body data-template-id="__page-root" class="bg-[#0A0A0F] text-white" style="background: rgb(10, 10, 15);">
+  <!-- NAVIGATION -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#0A0A0F]/90 backdrop-blur-lg border-b border-white/10">
    <div class="max-w-screen-2xl mx-auto">
-    <div class="px-8 py-5 flex items-center justify-between"><!-- Logo -->
+    <div class="px-8 py-5 flex items-center justify-between">
      <div class="flex items-center gap-x-3">
-      <div class="w-11 h-11 rounded-2xl overflow-hidden ring-1 ring-white/20"><img src="AiPSLogoSimp.png" ="nav-logo" class="w-full h-full object-cover canva-image" id="nav-logo" src="canva://MAHPXs_909Y/1" alt="Smart AiPS Logo">
+      <div class="w-11 h-11 rounded-2xl overflow-hidden ring-1 ring-white/20"><img src="AiPSLogoSimp.png" class="w-full h-full object-cover canva-image" id="nav-logo" alt="Smart AiPS Logo">
       </div>
-      <div><span data-template-id="nav-brand-name" class="font-semibold text-2xl tracking-tighter canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Smart AiPS</span>
+      <div><span data-template-id="nav-brand-name" class="heading-font text-2xl tracking-tighter canva-text">Smart AiPS</span>
       </div>
-     </div><!-- Desktop Navigation -->
-     <div class="hidden md:flex items-center gap-x-9 text-sm font-medium"><a href="#services" data-template-id="nav-link-services" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Services</a> <a href="#how-we-work" data-template-id="nav-link-how" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">How We Work</a> <a href="#why-us" data-template-id="nav-link-why" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Why Us</a>
      </div>
-     <div class="hidden md:flex items-center gap-x-4"><a href="#contact" data-template-id="nav-cta-secondary" class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-white/30 hover:bg-white/5 transition-colors canva-button" style="font-weight: 400; font-style: normal; font-size: 16px;">Talk to Us</a> <a href="#contact" data-template-id="nav-cta-primary" class="modern-button px-6 py-2.5 text-sm font-semibold rounded-3xl bg-white text-black hover:bg-white/90 flex items-center gap-x-2 canva-button" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0); font-weight: 400; font-style: normal; font-size: 16px;">Get Started</a>
-     </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-white/80 hover:text-white"> <i class="fa-solid fa-bars text-xl"></i> </button>
+     <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
+      <a href="#services" data-template-id="nav-link-services" class="nav-link text-white/90 hover:text-white canva-link">Services</a> 
+      <a href="#how-we-work" data-template-id="nav-link-how" class="nav-link text-white/90 hover:text-white canva-link">How We Work</a> 
+      <a href="#why-us" data-template-id="nav-link-why" class="nav-link text-white/90 hover:text-white canva-link">Why Us</a>
+     </div>
+     <div class="hidden md:flex items-center gap-x-4">
+      <a href="#contact" data-template-id="nav-cta-secondary" class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-white/30 hover:bg-white/5 transition-colors canva-button">Talk to Us</a> 
+      <a href="#contact" data-template-id="nav-cta-primary" class="modern-button px-6 py-2.5 text-sm font-semibold rounded-3xl bg-white text-black hover:bg-white/90 flex items-center gap-x-2 canva-button">Get Started</a>
+     </div>
+     <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-white/80 hover:text-white"> 
+      <i class="fa-solid fa-bars text-xl"></i> 
+     </button>
     </div>
-   </div><!-- Mobile Menu -->
+   </div>
    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-[#0A0A0F]">
-    <div class="px-6 py-6 flex flex-col gap-y-4 text-sm"><a href="#services" class="py-2 text-white/90">Services</a> <a href="#how-we-work" class="py-2 text-white/90">How We Work</a> <a href="#why-us" class="py-2 text-white/90">Why Us</a>
-     <div class="pt-4 flex flex-col gap-y-3"><a href="#contact" class="py-3 text-center rounded-3xl border border-white/30">Talk to Us</a> <a href="#contact" class="py-3 text-center rounded-3xl bg-white text-black font-semibold">Get Started</a>
+    <div class="px-6 py-6 flex flex-col gap-y-4 text-sm">
+     <a href="#services" class="py-2 text-white/90">Services</a> 
+     <a href="#how-we-work" class="py-2 text-white/90">How We Work</a> 
+     <a href="#why-us" class="py-2 text-white/90">Why Us</a>
+     <div class="pt-4 flex flex-col gap-y-3">
+      <a href="#contact" class="py-3 text-center rounded-3xl border border-white/30">Talk to Us</a> 
+      <a href="#contact" class="py-3 text-center rounded-3xl bg-white text-black font-semibold">Get Started</a>
      </div>
     </div>
    </div>
