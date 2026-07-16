@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260715-23-494c18b"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart AiPS • Intelligent Automation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .nav-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover {
+            color: #00f0ff;
+            transform: translateY(-1px);
+        }
+
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px -10px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 240, 255, 0.02) 100%);
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #00f0ff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.35));
+        }
+
+        .modern-button {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 240 255 / 0.2), 0 4px 6px -4px rgb(0 240 255 / 0.2);
+        }
+
+        .process-step {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.08) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(0, 240, 255, 0.15);
+            border-color: rgba(0, 240, 255, 0.4);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.04) 0%, rgba(0, 255, 157, 0.02) 100%);
+        }
+
+        .process-step:hover::after {
+            opacity: 1;
+        }
+
+        .nav-scrolled {
+            background-color: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+        }
+
+        .feature-card {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 240, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -8px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 100%);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-box {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-box:hover > div:first-child {
+            color: #00f0ff;
+        }
+
+        .feature-card {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 240, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -8px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 100%);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+    </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/e3937a0574eb2d69.data_sdk.js" type="text/javascript" integrity="sha512-xbp/ACqEQy1aDxYMtXTrR3y5MUbzxuggRR/9sD48Gl4VhLMMCiAHsxMaFV6DTdeBpR6ymF+t2zhPKYkWM3+Jfw=="></script>
+  <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
+ </head>
+ <body data-template-id="__page-root" class="bg-[#0A0A0F] text-white" style="background: rgb(10, 10, 15);"><!-- NAVIGATION -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#0A0A0F]/90 backdrop-blur-lg border-b border-white/10">
+   <div class="max-w-screen-2xl mx-auto">
+    <div class="px-8 py-5 flex items-center justify-between"><!-- Logo -->
+     <div class="flex items-center gap-x-3">
+      <div class="w-11 h-11 rounded-2xl overflow-hidden ring-1 ring-white/20"><img data-template-id="nav-logo" class="w-full h-full object-cover canva-image" id="nav-logo" src="canva://MAHPXs_909Y/1" alt="Smart AiPS Logo">
+      </div>
+      <div><span data-template-id="nav-brand-name" class="font-semibold text-2xl tracking-tighter canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Smart AiPS</span>
+      </div>
+     </div><!-- Desktop Navigation -->
+     <div class="hidden md:flex items-center gap-x-9 text-sm font-medium"><a href="#services" data-template-id="nav-link-services" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Services</a> <a href="#how-we-work" data-template-id="nav-link-how" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">How We Work</a> <a href="#why-us" data-template-id="nav-link-why" class="nav-link text-white/90 hover:text-white canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Why Us</a>
+     </div>
+     <div class="hidden md:flex items-center gap-x-4"><a href="#contact" data-template-id="nav-cta-secondary" class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-white/30 hover:bg-white/5 transition-colors canva-button" style="font-weight: 400; font-style: normal; font-size: 16px;">Talk to Us</a> <a href="#contact" data-template-id="nav-cta-primary" class="modern-button px-6 py-2.5 text-sm font-semibold rounded-3xl bg-white text-black hover:bg-white/90 flex items-center gap-x-2 canva-button" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0); font-weight: 400; font-style: normal; font-size: 16px;">Get Started</a>
+     </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-white/80 hover:text-white"> <i class="fa-solid fa-bars text-xl"></i> </button>
+    </div>
+   </div><!-- Mobile Menu -->
+   <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-[#0A0A0F]">
+    <div class="px-6 py-6 flex flex-col gap-y-4 text-sm"><a href="#services" class="py-2 text-white/90">Services</a> <a href="#how-we-work" class="py-2 text-white/90">How We Work</a> <a href="#why-us" class="py-2 text-white/90">Why Us</a>
+     <div class="pt-4 flex flex-col gap-y-3"><a href="#contact" class="py-3 text-center rounded-3xl border border-white/30">Talk to Us</a> <a href="#contact" class="py-3 text-center rounded-3xl bg-white text-black font-semibold">Get Started</a>
+     </div>
+    </div>
+   </div>
+  </nav><!-- HERO SECTION -->
+  <section class="pt-20 pb-16 md:pt-24 md:pb-20 px-6">
+   <div class="max-w-screen-2xl mx-auto">
+    <div class="flex flex-col items-center text-center max-w-5xl mx-auto"><!-- Logo -->
+     <div class="mb-8 mt-4">
+      <div class="w-[148px] h-[148px] md:w-[168px] md:h-[168px] mx-auto rounded-[42px] overflow-hidden ring-1 ring-white/10 shadow-2xl logo-glow"><img data-template-id="hero-logo" class="w-full h-full object-cover canva-image" id="hero-logo" style="transition: transform 0.3s ease;" src="canva://MAHPXsnrrrs/1" alt="Smart AiPS - Intelligent Automation Logo">
+      </div>
+     </div>
+     <h1 data-template-id="hero-heading" class="heading-font text-6xl md:text-7xl lg:text-[5.25rem] leading-[1.05] tracking-[-3.5px] max-w-[18ch] canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 41px;">Intelligent  Automation. 
+Real  Results.</h1>
+     <p data-template-id="hero-subheading" class="mt-6 max-w-[620px] text-xl text-white/70 leading-relaxed canva-text" style="color: rgba(255, 255, 255, 0.7); font-weight: 400; font-style: normal; font-size: 16px;">We design and build practical AI systems on AWS that reduce manual work, improve decision-making, and scale with your business.</p>
+     <div class="mt-10 flex flex-col sm:flex-row items-center gap-4"><a href="#contact" class="modern-button w-full sm:w-auto px-9 py-[17px] text-lg font-semibold rounded-3xl bg-white text-black flex items-center justify-center gap-x-3 group"> <span data-template-id="hero-cta-primary" class="canva-button" style="color: rgb(0, 0, 0); font-weight: 400; font-style: normal; font-size: 16px;">Start a Conversation</span> <i class="fa-solid fa-arrow-right group-active:translate-x-0.5 transition"></i> </a> <a href="#how-we-work" class="w-full sm:w-auto px-8 py-[17px] text-lg font-medium rounded-3xl border border-white/30 hover:bg-white/5 transition flex items-center justify-center gap-x-2"> <span data-template-id="hero-cta-secondary" class="canva-button" style="font-weight: 400; font-style: normal; font-size: 16px;">See How It Works</span> </a>
+     </div>
+     <div class="mt-14 flex items-center gap-x-8 text-sm">
+      <div class="flex items-center -space-x-2">
+       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
+       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
+       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
+      </div>
+      <div data-template-id="hero-trust-text" class="text-white/60 text-sm canva-text" style="color: rgba(255, 255, 255, 0.6); font-weight: 400; font-style: normal; font-size: 16px;">Trusted by growing businesses across the Southeast</div>
+     </div>
+    </div>
+   </div>
+  </section><!-- TRUST / STATS BAR -->
+  <div class="border-y border-white/10 bg-white/[0.015]">
+   <div class="max-w-screen-2xl mx-auto px-8 py-5">
+    <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-10 gap-y-4 text-center md:text-left">
+     <div class="stat-box">
+      <div data-template-id="stat1-value" class="text-3xl font-semibold tracking-tighter canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">AWS</div>
+      <div data-template-id="stat1-label" class="text-xs text-white/50 tracking-[1px] font-medium canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">CERTIFIED PARTNER</div>
+     </div>
+     <div class="hidden md:block w-px h-8 bg-white/20"></div>
+     <div class="stat-box">
+      <div data-template-id="stat2-value" class="text-3xl font-semibold tracking-tighter canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">100%</div>
+      <div data-template-id="stat2-label" class="text-xs text-white/50 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">FOUNDER-LED DELIVERY</div>
+     </div>
+     <div class="hidden md:block w-px h-8 bg-white/20"></div>
+     <div class="stat-box">
+      <div data-template-id="stat3-value" class="text-3xl font-semibold tracking-tighter canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">4-8 wks</div>
+      <div data-template-id="stat3-label" class="text-xs text-white/50 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">TYPICAL TIME TO FIRST VALUE</div>
+     </div>
+     <div class="hidden md:block w-px h-8 bg-white/20"></div>
+     <div data-template-id="stat4-tagline" class="text-sm max-w-[220px] text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We focus on outcomes, not technology theater.</div>
+    </div>
+   </div>
+  </div><!-- SERVICES SECTION -->
+  <section id="services" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+   <div class="max-w-2xl mb-12">
+    <div data-template-id="services-eyebrow" class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">WHAT WE BUILD</div>
+    <h2 data-template-id="services-heading" class="section-header canva-text" style="font-weight: 700; font-style: normal; font-size: 24px;">Practical AI systems that actually work.</h2>
+    <p data-template-id="services-subheading" class="mt-4 text-lg text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We don't sell AI hype. We deliver production-grade automation that integrates with how your business already operates.</p>
+   </div>
+   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
+     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-robot text-[#00f0ff] text-3xl"></i>
+     </div>
+     <h3 data-template-id="service1-title" class="text-2xl font-semibold tracking-tight mb-3 canva-text" style="font-weight: 600; font-style: normal; font-size: 19px;">Custom AI Agents</h3>
+     <p data-template-id="service1-desc" class="text-white/70 leading-relaxed canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Autonomous or semi-autonomous agents that handle prospect research, production optimization, customer triage, reporting, and complex multi-step workflows.</p>
+     <div data-template-id="service1-tags" class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">MULTI-AGENT SYSTEMS • BEDROCK</div>
+    </div>
+    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
+     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-link text-[#00f0ff] text-3xl"></i>
+     </div>
+     <h3 data-template-id="service2-title" class="text-2xl font-semibold tracking-tight mb-3 canva-text" style="font-weight: 600; font-style: normal; font-size: 19px;">AWS Automation</h3>
+     <p data-template-id="service2-desc" class="text-white/70 leading-relaxed canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Deep integration of AI into your existing systems using Amazon Bedrock, Lambda, Step Functions, and API Gateway. We connect intelligence directly to your operations.</p>
+     <div data-template-id="service2-tags" class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">LAMBDA • STEP FUNCTIONS • API GATEWAY</div>
+    </div>
+    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
+     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-book text-[#00f0ff] text-3xl"></i>
+     </div>
+     <h3 data-template-id="service3-title" class="text-2xl font-semibold tracking-tight mb-3 canva-text" style="font-weight: 600; font-style: normal; font-size: 19px;">RAG Knowledge Systems</h3>
+     <p data-template-id="service3-desc" class="text-white/70 leading-relaxed canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Secure, private knowledge bases that let your team query company documents, procedures, specs, and history using natural language — dramatically reducing search time.</p>
+     <div data-template-id="service3-tags" class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">RETRIEVAL-AUGMENTED GENERATION</div>
+    </div>
+   </div>
+  </section><!-- HOW WE WORK -->
+  <section id="how-we-work" class="bg-white/[0.015] border-y border-white/10 py-16">
+   <div class="max-w-screen-2xl mx-auto px-8">
+    <div class="max-w-2xl mb-12">
+     <div data-template-id="process-eyebrow" class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">OUR PROCESS</div>
+     <h2 data-template-id="process-heading" class="section-header canva-text" style="font-weight: 700; font-style: normal; font-size: 24px;">Simple. Transparent. Built for results.</h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-6">
+     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+      <div data-template-id="step1-num" class="text-[#00f0ff] text-sm font-mono mb-4 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">01</div>
+      <h4 data-template-id="step1-title" class="font-semibold text-xl tracking-tight mb-2 canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Discovery</h4>
+      <p data-template-id="step1-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We start with your real operational pain points — not generic AI ideas. We map processes, data, and goals.</p>
+     </div>
+     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+      <div data-template-id="step2-num" class="text-[#00f0ff] text-sm font-mono mb-4 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">02</div>
+      <h4 data-template-id="step2-title" class="font-semibold text-xl tracking-tight mb-2 canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Pilot</h4>
+      <p data-template-id="step2-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We build a focused, high-impact pilot in 4–8 weeks so you can see measurable results before committing to a larger rollout.</p>
+     </div>
+     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+      <div data-template-id="step3-num" class="text-[#00f0ff] text-sm font-mono mb-4 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">03</div>
+      <h4 data-template-id="step3-title" class="font-semibold text-xl tracking-tight mb-2 canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Implement</h4>
+      <p data-template-id="step3-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Full production deployment with proper security, monitoring, documentation, and team training.</p>
+     </div>
+     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+      <div data-template-id="step4-num" class="text-[#00f0ff] text-sm font-mono mb-4 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">04</div>
+      <h4 data-template-id="step4-title" class="font-semibold text-xl tracking-tight mb-2 canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Support &amp; Evolve</h4>
+      <p data-template-id="step4-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Ongoing optimization, monitoring, and iteration through flexible monthly retainers so the system keeps improving.</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- WHY US -->
+  <section id="why-us" class="max-w-screen-2xl mx-auto px-8 py-20">
+   <div class="grid lg:grid-cols-12 gap-x-12 gap-y-12 items-center">
+    <div class="lg:col-span-5">
+     <div data-template-id="why-eyebrow" class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3 canva-text" style="color: rgb(0, 240, 255); font-weight: 400; font-style: normal; font-size: 16px;">WHY SMART AIPS</div>
+     <h2 data-template-id="why-heading" class="section-header leading-none canva-text" style="font-weight: 700; font-style: normal; font-size: 24px;">We build AI you can actually trust in production.</h2>
+     <p data-template-id="why-subheading" class="mt-6 text-lg text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Most AI projects fail not because the technology is bad, but because implementation is poor. We obsess over the details that make systems reliable day after day.</p>
+     <div class="mt-8"><a href="#contact" class="inline-flex items-center gap-x-2 text-sm font-medium group"> <span data-template-id="why-cta-link" class="border-b border-white/40 group-hover:border-[#00f0ff] transition-colors canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Learn more about our approach</span> <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-0.5 transition"></i> </a>
+     </div>
+    </div>
+    <div class="lg:col-span-7">
+     <div class="grid sm:grid-cols-2 gap-6">
+      <div class="border border-white/10 rounded-3xl p-7 feature-card">
+       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span data-template-id="feature1-title" class="font-semibold canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Founder-Led Delivery</span>
+       </div>
+       <p data-template-id="feature1-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">You work directly with experienced builders — not junior staff. Every project gets senior attention from day one.</p>
+      </div>
+      <div class="border border-white/10 rounded-3xl p-7 feature-card">
+       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span data-template-id="feature2-title" class="font-semibold canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Production First</span>
+       </div>
+       <p data-template-id="feature2-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We design for reliability, security, monitoring, and maintainability from the start — not as an afterthought.</p>
+      </div>
+      <div class="border border-white/10 rounded-3xl p-7 feature-card">
+       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span data-template-id="feature3-title" class="font-semibold canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">AWS Expertise</span>
+       </div>
+       <p data-template-id="feature3-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Deep, hands-on experience with Amazon Bedrock and the full AWS ecosystem. We build solutions that scale.</p>
+      </div>
+      <div class="border border-white/10 rounded-3xl p-7 feature-card">
+       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span data-template-id="feature4-title" class="font-semibold canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Outcome Focused</span>
+       </div>
+       <p data-template-id="feature4-desc" class="text-sm text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We measure success by the operational impact we create — time saved, errors reduced, decisions improved.</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- FINAL CTA -->
+  <section id="contact" class="bg-gradient-to-b from-white/[0.015] to-transparent border-t border-white/10 py-16">
+   <div class="max-w-screen-2xl mx-auto px-8">
+    <div class="max-w-2xl mx-auto text-center">
+     <h2 data-template-id="cta-heading" class="text-5xl tracking-tighter font-semibold canva-text" style="font-weight: 600; font-style: normal; font-size: 24px;">Ready to build something that actually moves the needle?</h2>
+     <p data-template-id="cta-subheading" class="mt-5 text-xl text-white/70 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">Let's have a short, no-pressure conversation about your biggest operational challenges.</p>
+     <div class="mt-9 flex flex-col sm:flex-row justify-center gap-4"><a href="mailto:builtbyaips@gmail.com?subject=Let%27s%20Talk%20About%20Smart%20AiPS" class="modern-button px-10 py-4 rounded-3xl bg-white text-black font-semibold text-lg flex items-center justify-center gap-x-3"> <span data-template-id="cta-email-btn" class="canva-button" style="font-weight: 400; font-style: normal; font-size: 16px;">Email Us</span> </a> <a href="#" class="px-10 py-4 rounded-3xl border border-white/30 hover:bg-white/5 font-medium text-lg flex items-center justify-center gap-x-3 transition"> <span data-template-id="cta-call-btn" class="canva-button" style="font-weight: 400; font-style: normal; font-size: 16px;">Book a 20-min Call</span> </a>
+     </div>
+     <p data-template-id="cta-footer-note" class="mt-8 text-sm text-white/50 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">We typically respond within one business day.</p>
+    </div>
+   </div>
+  </section><!-- FOOTER -->
+  <footer class="border-t border-white/10 py-12 px-8 text-sm">
+   <div class="max-w-screen-2xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-y-6">
+     <div class="flex items-center gap-x-4">
+      <div class="flex items-center gap-x-2.5">
+       <div class="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/20"><img data-template-id="footer-logo" class="w-full h-full object-cover canva-image" src="canva://MAHPXs_909Y/1" alt="Smart AiPS">
+       </div><span data-template-id="footer-brand-name" class="font-semibold tracking-tight canva-text" style="font-weight: 600; font-style: normal; font-size: 16px;">Smart AiPS</span>
+      </div>
+      <div data-template-id="footer-copyright" class="text-white/40 canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">© 2026</div>
+     </div>
+     <div class="flex flex-wrap gap-x-8 gap-y-2 text-white/60"><a href="#" data-template-id="footer-link-privacy" class="hover:text-white transition canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Privacy</a> <a href="#" data-template-id="footer-link-terms" class="hover:text-white transition canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">Terms</a> <a href="mailto:builtbyaips@gmail.com" data-template-id="footer-link-email" class="hover:text-white transition canva-link" style="font-weight: 400; font-style: normal; font-size: 16px;">builtbyaips@gmail.com</a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script>
+        function initNavbar() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.classList.add('nav-scrolled', 'shadow-xl');
+                } else {
+                    navbar.classList.remove('nav-scrolled', 'shadow-xl');
+                }
+            });
+        }
+
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    btn.querySelector('i').classList.add('fa-bars');
+                    btn.querySelector('i').classList.remove('fa-times');
+                });
+            });
+        }
+
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        const offsetPosition = target.getBoundingClientRect().top + window.scrollY - 80;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        function initializeWebsite() {
+            initNavbar();
+            initMobileMenu();
+            initSmoothScroll();
+            
+            const heroLogo = document.getElementById('hero-logo');
+            if (heroLogo) {
+                heroLogo.addEventListener('mouseenter', () => heroLogo.style.transform = 'scale(1.03)');
+                heroLogo.addEventListener('mouseleave', () => heroLogo.style.transform = 'scale(1)');
+            }
+        }
+
+        window.onload = initializeWebsite;
+    </script>
+  <script src="/_sdk/dd0c76458dfc34da.editing_sdk.js" integrity="sha512-3v16bzjI2BuJn6RtwUF3z9vtnL1uV3jWxNWON45wLU2T75WL9XEo/qXjfrfwed+I9OpvriTp8j9vqTb2AaQPZQ=="></script>
+ 
+</body></html>
