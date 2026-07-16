@@ -1,0 +1,16 @@
+version: 1
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Building Smart AiPS website..."
+    build:
+      commands:
+        - echo "Static HTML site - no build required"
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths: []
