@@ -1,427 +1,596 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart AiPS • Intelligent Automation</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart AiPS • Intelligent Automation</title>
+    <meta name="description" content="Smart AiPS designs and builds practical AI systems on AWS — custom agents, automation, and private knowledge bases that reduce manual work.">
+    <link rel="icon" href="assets/logo.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0A0A0F;
+            --cyan: #00F0FF;
+            --green: #00FF9D;
+            --line: rgba(255, 255, 255, 0.10);
         }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
 
         .heading-font {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.04em;
+            font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.025em;
         }
         .section-header {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
             font-size: 2.75rem;
             line-height: 1.1;
             font-weight: 700;
             letter-spacing: -0.04em;
         }
-        .nav-link {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+        /* ---------- ambient atmosphere ---------- */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .ambient .grid {
+            position: absolute;
+            inset: -2px;
+            background-image:
+                linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+            background-size: 74px 74px;
+            mask-image: radial-gradient(1100px 780px at 50% 8%, #000 0%, transparent 78%);
+            -webkit-mask-image: radial-gradient(1100px 780px at 50% 8%, #000 0%, transparent 78%);
+        }
+        .ambient .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .30;
+        }
+        .ambient .g1 {
+            width: 620px; height: 620px; top: -220px; left: 50%; margin-left: -420px;
+            background: radial-gradient(circle, rgba(0,240,255,.55), transparent 70%);
+            animation: drift1 26s ease-in-out infinite;
+        }
+        .ambient .g2 {
+            width: 560px; height: 560px; top: -120px; left: 50%; margin-left: 40px;
+            background: radial-gradient(circle, rgba(0,255,157,.40), transparent 70%);
+            animation: drift2 32s ease-in-out infinite;
+        }
+        @keyframes drift1 { 0%,100% { transform: translate(0,0) } 50% { transform: translate(60px,40px) } }
+        @keyframes drift2 { 0%,100% { transform: translate(0,0) } 50% { transform: translate(-50px,55px) } }
+
+        nav, section, footer, .statbar { position: relative; z-index: 1; }
+
+        /* ---------- scroll progress ---------- */
+        #progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+            transform: scaleX(0); transform-origin: 0 50%;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            z-index: 60; box-shadow: 0 0 14px rgba(0, 240, 255, .55);
         }
 
-        .nav-link:hover {
-            color: #00f0ff;
-            transform: translateY(-1px);
+        /* ---------- scroll reveals ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .75s cubic-bezier(.2,.8,.3,1), transform .75s cubic-bezier(.2,.8,.3,1);
+            will-change: opacity, transform;
         }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* ---------- navigation ---------- */
+        .nav-link { transition: color .2s; position: relative; }
+        .nav-link::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1.5px;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            transform: scaleX(0); transform-origin: 0 50%; transition: transform .28s cubic-bezier(.2,.8,.3,1);
+        }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+        .nav-link.active { color: #fff; }
+        .nav-scrolled { background-color: rgba(10,10,15,.92); backdrop-filter: blur(14px); }
+
+        /* ---------- cards ---------- */
         .service-card {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            transition: transform .35s cubic-bezier(.2,.8,.3,1), border-color .35s, box-shadow .35s;
         }
-
         .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            content: "";
+            position: absolute; inset: 0; z-index: 0; border-radius: inherit; opacity: 0;
+            transition: opacity .35s;
+            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(0,240,255,.13), transparent 62%);
         }
-
+        .service-card:hover::before { opacity: 1; }
+        .service-card > * { position: relative; z-index: 1; }
         .service-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 60px -10px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 240, 255, 0.02) 100%);
+            transform: translateY(-6px);
+            border-color: rgba(0,240,255,.32);
+            box-shadow: 0 26px 50px -28px rgba(0,240,255,.5);
         }
 
-        .service-card:hover::before {
-            opacity: 1;
-        }
         .gradient-text {
-            background: linear-gradient(90deg, #00f0ff, #00ff9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
         }
-        .logo-glow {
-            filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.35));
-        }
-        .modern-button {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
+        .logo-glow { filter: drop-shadow(0 0 30px rgba(0,240,255,.35)); }
+        .modern-button { transition: transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s; }
+        .modern-button:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(0,240,255,.55); }
 
-        .modern-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgb(0 240 255 / 0.2), 0 4px 6px -4px rgb(0 240 255 / 0.2);
+        /* ---------- Aipsy hooks ---------- */
+        /* Flash a section when the assistant walks you to it. */
+        [data-aipsy-section] { scroll-margin-top: 96px; }
+        .aipsy-target::after {
+            content: "";
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+            background: radial-gradient(70% 60% at 50% 0%, rgba(0,240,255,.10), transparent 72%);
+            box-shadow: inset 0 2px 0 rgba(0,255,157,.75), inset 0 -1px 0 rgba(0,255,157,.2);
+            animation: aipsy-flash 1.8s cubic-bezier(.2,.8,.3,1) forwards;
         }
-        .process-step {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        @keyframes aipsy-flash {
+            0%   { opacity: 1; }
+            60%  { opacity: .8; }
+            100% { opacity: 0; }
         }
-        .process-step::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, rgba(0, 240, 255, 0.08) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+        .ask-aipsy {
+            display: inline-flex; align-items: center; gap: .5rem;
+            font-size: .78rem; letter-spacing: .04em; font-weight: 500;
+            color: rgba(255,255,255,.42);
+            border: 0; background: none; padding: 0; cursor: pointer;
+            transition: color .22s;
         }
-        .process-step:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(0, 240, 255, 0.15);
-            border-color: rgba(0, 240, 255, 0.4);
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.04) 0%, rgba(0, 255, 157, 0.02) 100%);
-        }
-        .process-step:hover::after {
-            opacity: 1;
-        }
-        .nav-scrolled {
-            background-color: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(12px);
-        }
-        .feature-card {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at top left, rgba(0, 240, 255, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -8px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 100%);
-        }
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-        .stat-box {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-        }
-        .stat-box:hover {
-            transform: translateY(-2px);
-        }
-        .stat-box:hover > div:first-child {
-            color: #00f0ff;
+        .ask-aipsy:hover { color: var(--green); }
+        .ask-aipsy i { font-size: .7rem; transition: transform .22s; }
+        .ask-aipsy:hover i { transform: translateX(2px); }
+
+        :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .ambient .glow { animation: none; }
         }
     </style>
- </head>
- <body class="bg-[#0A0A0F] text-white" style="background: rgb(10, 10, 15);">
-  <!-- NAVIGATION -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#0A0A0F]/90 backdrop-blur-lg border-b border-white/10">
-   <div class="max-w-screen-2xl mx-auto">
-    <div class="px-8 py-5 flex items-center justify-between">
-     <div class="flex items-center gap-x-3">
-      <div class="w-11 h-11 rounded-2xl overflow-hidden ring-1 ring-white/20"><img src="AiPSLogoSimp.png" class="w-full h-full object-cover" id="nav-logo" alt="Smart AiPS Logo">
-      </div>
-      <div><span class="heading-font text-2xl tracking-tighter">Smart AiPS</span>
-      </div>
-     </div>
-     <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
-      <a href="#services" class="nav-link text-white/90 hover:text-white">Services</a>
-      <a href="#how-we-work" class="nav-link text-white/90 hover:text-white">How We Work</a>
-      <a href="#why-us" class="nav-link text-white/90 hover:text-white">Why Us</a>
-     </div>
-     <div class="hidden md:flex items-center gap-x-4">
-      <a href="#contact" class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-white/30 hover:bg-white/5 transition-colors">Talk to Us</a>
-      <a href="#contact" class="modern-button px-6 py-2.5 text-sm font-semibold rounded-3xl bg-white text-black hover:bg-white/90 flex items-center gap-x-2">Get Started</a>
-     </div>
-     <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-white/80 hover:text-white">
-      <i class="fa-solid fa-bars text-xl"></i>
-     </button>
-    </div>
-   </div>
-   <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-[#0A0A0F]">
-    <div class="px-6 py-6 flex flex-col gap-y-4 text-sm">
-     <a href="#services" class="py-2 text-white/90">Services</a>
-     <a href="#how-we-work" class="py-2 text-white/90">How We Work</a>
-     <a href="#why-us" class="py-2 text-white/90">Why Us</a>
-     <div class="pt-4 flex flex-col gap-y-3">
-      <a href="#contact" class="py-3 text-center rounded-3xl border border-white/30">Talk to Us</a>
-      <a href="#contact" class="py-3 text-center rounded-3xl bg-white text-black font-semibold">Get Started</a>
-     </div>
-    </div>
-   </div>
-  </nav>
+</head>
+<body class="bg-[#0A0A0F] text-white">
 
-  <!-- HERO SECTION -->
-  <section class="pt-20 pb-16 md:pt-24 md:pb-20 px-6">
-   <div class="max-w-screen-2xl mx-auto">
-    <div class="flex flex-col items-center text-center max-w-5xl mx-auto">
-     <!-- Logo -->
-     <div class="mb-8 mt-4">
-      <div class="w-[148px] h-[148px] md:w-[168px] md:h-[168px] mx-auto rounded-[42px] overflow-hidden ring-1 ring-white/10 shadow-2xl logo-glow"><img src="SmartAiPSLogo.png" class="w-full h-full object-cover" id="hero-logo" style="transition: transform 0.3s ease;" alt="Smart AiPS - Intelligent Automation Logo">
-      </div>
-     </div>
-     <h1 class="heading-font text-6xl md:text-7xl lg:text-[5.25rem] leading-[1.05] tracking-[-3.5px] max-w-[18ch]" style="color: rgb(255, 255, 255); font-weight: 700;">
-    Intelligent Automation.<br>Real Results.
-</h1>
-     <p class="mt-6 max-w-[620px] text-xl text-white/70 leading-relaxed">We design and build practical AI systems on AWS that reduce manual work, improve decision-making, and scale with your business.</p>
-     <div class="mt-10 flex flex-col sm:flex-row items-center gap-4"><a href="#contact" class="modern-button w-full sm:w-auto px-9 py-[17px] text-lg font-semibold rounded-3xl bg-white text-black flex items-center justify-center gap-x-3 group"> <span>Start a Conversation</span> <i class="fa-solid fa-arrow-right group-active:translate-x-0.5 transition"></i> </a> <a href="#how-we-work" class="w-full sm:w-auto px-8 py-[17px] text-lg font-medium rounded-3xl border border-white/30 hover:bg-white/5 transition flex items-center justify-center gap-x-2"> <span>See How It Works</span> </a>
-     </div>
-     <div class="mt-14 flex items-center gap-x-8 text-sm">
-      <div class="flex items-center -space-x-2">
-       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
-       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
-       <div class="w-7 h-7 rounded-full bg-white/10 ring-2 ring-[#0A0A0F]"></div>
-      </div>
-      <div class="text-white/60 text-sm">Trusted by growing businesses across the Southeast</div>
-     </div>
-    </div>
-   </div>
-  </section>
+    <div id="progress"></div>
 
-  <!-- TRUST / STATS BAR -->
-  <div class="border-y border-white/10 bg-white/[0.015]">
-   <div class="max-w-screen-2xl mx-auto px-8 py-5">
-    <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-10 gap-y-4 text-center md:text-left">
-     <div class="stat-box">
-      <div class="text-3xl font-semibold tracking-tighter">AWS</div>
-      <div class="text-xs text-white/50 tracking-[1px] font-medium">BUILT ON AWS</div>
-     </div>
-     <div class="hidden md:block w-px h-8 bg-white/20"></div>
-     <div class="stat-box">
-      <div class="text-3xl font-semibold tracking-tighter">100%</div>
-      <div class="text-xs text-white/50">FOUNDER-LED DELIVERY</div>
-     </div>
-     <div class="hidden md:block w-px h-8 bg-white/20"></div>
-     <div class="stat-box">
-      <div class="text-3xl font-semibold tracking-tighter">4-8 wks</div>
-      <div class="text-xs text-white/50">TYPICAL TIME TO FIRST VALUE</div>
-     </div>
-     <div class="hidden md:block w-px h-8 bg-white/20"></div>
-     <div class="text-sm max-w-[220px] text-white/70">We focus on outcomes, not technology theater.</div>
+    <!-- AMBIENT LAYER -->
+    <div class="ambient" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
     </div>
-   </div>
-  </div>
 
-  <!-- SERVICES SECTION -->
-  <section id="services" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
-   <div class="max-w-2xl mb-12">
-    <div class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3">WHAT WE BUILD</div>
-    <h2 class="section-header">Practical AI systems that actually work.</h2>
-    <p class="mt-4 text-lg text-white/70">We don't sell AI hype. We deliver production-grade automation that integrates with how your business already operates.</p>
-   </div>
-   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
-     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-robot text-[#00f0ff] text-3xl"></i>
-     </div>
-     <h3 class="text-2xl font-semibold tracking-tight mb-3">Custom AI Agents</h3>
-     <p class="text-white/70 leading-relaxed">Autonomous or semi-autonomous agents that handle prospect research, production optimization, customer triage, reporting, and complex multi-step workflows.</p>
-     <div class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium">MULTI-AGENT SYSTEMS • BEDROCK</div>
-    </div>
-    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
-     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-link text-[#00f0ff] text-3xl"></i>
-     </div>
-     <h3 class="text-2xl font-semibold tracking-tight mb-3">AWS Automation</h3>
-     <p class="text-white/70 leading-relaxed">Deep integration of AI into your existing systems using Amazon Bedrock, Lambda, Step Functions, and API Gateway. We connect intelligence directly to your operations.</p>
-     <div class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium">LAMBDA • STEP FUNCTIONS • API GATEWAY</div>
-    </div>
-    <div class="service-card bg-white/[0.03] border border-white/10 rounded-3xl p-8 group">
-     <div class="w-12 h-12 rounded-2xl bg-[#00f0ff]/10 flex items-center justify-center mb-6"><i class="fa-solid fa-book text-[#00f0ff] text-3xl"></i>
-     </div>
-     <h3 class="text-2xl font-semibold tracking-tight mb-3">RAG Knowledge Systems</h3>
-     <p class="text-white/70 leading-relaxed">Secure, private knowledge bases that let your team query company documents, procedures, specs, and history using natural language — dramatically reducing search time.</p>
-     <div class="mt-6 text-xs uppercase tracking-widest text-white/40 font-medium">RETRIEVAL-AUGMENTED GENERATION</div>
-    </div>
-   </div>
-  </section>
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#0A0A0F]/85 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <a href="#top" class="flex items-center gap-x-3 group">
+                    <div class="w-11 h-11 rounded-2xl overflow-hidden ring-1 ring-white/20 group-hover:ring-[#00F0FF]/50 transition">
+                        <img src="assets/logo.webp" alt="Smart AiPS" class="brand-mark w-full h-full object-cover">
+                    </div>
+                    <span class="heading-font text-2xl tracking-tight">Smart AiPS</span>
+                </a>
 
-  <!-- HOW WE WORK -->
-  <section id="how-we-work" class="bg-white/[0.015] border-y border-white/10 py-16">
-   <div class="max-w-screen-2xl mx-auto px-8">
-    <div class="max-w-2xl mb-12">
-     <div class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3">OUR PROCESS</div>
-     <h2 class="section-header">Simple. Transparent. Built for results.</h2>
-    </div>
-    <div class="grid md:grid-cols-4 gap-6">
-     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
-      <div class="text-[#00f0ff] text-sm font-mono mb-4">01</div>
-      <h4 class="font-semibold text-xl tracking-tight mb-2">Discovery</h4>
-      <p class="text-sm text-white/70">We start with your real operational pain points — not generic AI ideas. We map processes, data, and goals.</p>
-     </div>
-     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
-      <div class="text-[#00f0ff] text-sm font-mono mb-4">02</div>
-      <h4 class="font-semibold text-xl tracking-tight mb-2">Pilot</h4>
-      <p class="text-sm text-white/70">We build a focused, high-impact pilot in 4–8 weeks so you can see measurable results before committing to a larger rollout.</p>
-     </div>
-     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
-      <div class="text-[#00f0ff] text-sm font-mono mb-4">03</div>
-      <h4 class="font-semibold text-xl tracking-tight mb-2">Implement</h4>
-      <p class="text-sm text-white/70">Full production deployment with proper security, monitoring, documentation, and team training.</p>
-     </div>
-     <div class="process-step bg-white/[0.03] border border-white/10 rounded-3xl p-7">
-      <div class="text-[#00f0ff] text-sm font-mono mb-4">04</div>
-      <h4 class="font-semibold text-xl tracking-tight mb-2">Support &amp; Evolve</h4>
-      <p class="text-sm text-white/70">Ongoing optimization, monitoring, and iteration through flexible monthly retainers so the system keeps improving.</p>
-     </div>
-    </div>
-   </div>
-  </section>
+                <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
+                    <a href="#services" class="nav-link text-white/70 hover:text-white">Services</a>
+                    <a href="#how-we-work" class="nav-link text-white/70 hover:text-white">How We Work</a>
+                    <a href="#why-us" class="nav-link text-white/70 hover:text-white">Why Us</a>
+                </div>
 
-  <!-- WHY US -->
-  <section id="why-us" class="max-w-screen-2xl mx-auto px-8 py-20">
-   <div class="grid lg:grid-cols-12 gap-x-12 gap-y-12 items-center">
-    <div class="lg:col-span-5">
-     <div class="uppercase tracking-[2px] text-xs font-semibold text-[#00f0ff] mb-3">WHY SMART AIPS</div>
-     <h2 class="section-header leading-none">We build AI you can actually trust in production.</h2>
-     <p class="mt-6 text-lg text-white/70">Most AI projects fail not because the technology is bad, but because implementation is poor. We obsess over the details that make systems reliable day after day.</p>
-     <div class="mt-8"><a href="#contact" class="inline-flex items-center gap-x-2 text-sm font-medium group"> <span class="border-b border-white/40 group-hover:border-[#00f0ff] transition-colors">Learn more about our approach</span> <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-0.5 transition"></i> </a>
-     </div>
-    </div>
-    <div class="lg:col-span-7">
-     <div class="grid sm:grid-cols-2 gap-6">
-      <div class="border border-white/10 rounded-3xl p-7 feature-card">
-       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span class="font-semibold">Founder-Led Delivery</span>
-       </div>
-       <p class="text-sm text-white/70">You work directly with experienced builders — not junior staff. Every project gets senior attention from day one.</p>
-      </div>
-      <div class="border border-white/10 rounded-3xl p-7 feature-card">
-       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span class="font-semibold">Production First</span>
-       </div>
-       <p class="text-sm text-white/70">We design for reliability, security, monitoring, and maintainability from the start — not as an afterthought.</p>
-      </div>
-      <div class="border border-white/10 rounded-3xl p-7 feature-card">
-       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span class="font-semibold">AWS Expertise</span>
-       </div>
-       <p class="text-sm text-white/70">Deep, hands-on experience with Amazon Bedrock and the wider AWS ecosystem. We build solutions that scale.</p>
-      </div>
-      <div class="border border-white/10 rounded-3xl p-7 feature-card">
-       <div class="flex items-center gap-x-3 mb-4"><i class="fa-solid fa-check-double text-[#00f0ff]"></i> <span class="font-semibold">Outcome Focused</span>
-       </div>
-       <p class="text-sm text-white/70">We measure success by the operational impact we create — time saved, errors reduced, decisions improved.</p>
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
+                <div class="hidden md:flex items-center gap-x-4">
+                    <button data-aipsy-ask="I'd like to talk to someone"
+                            class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-white/25 hover:border-[#00FF9D]/60 hover:bg-white/5 transition-colors">
+                        Talk to Us
+                    </button>
+                    <a href="#contact"
+                       class="modern-button px-6 py-2.5 text-sm font-semibold rounded-3xl bg-white text-black hover:bg-white/90">
+                        Get Started
+                    </a>
+                </div>
 
-  <!-- FINAL CTA -->
-  <section id="contact" class="bg-gradient-to-b from-white/[0.015] to-transparent border-t border-white/10 py-16">
-   <div class="max-w-screen-2xl mx-auto px-8">
-    <div class="max-w-2xl mx-auto text-center">
-     <h2 class="text-5xl tracking-tighter font-semibold">Ready to build something that actually moves the needle?</h2>
-     <p class="mt-5 text-xl text-white/70">Let's have a short, no-pressure conversation about your biggest operational challenges.</p>
-     <div class="mt-9 flex flex-col sm:flex-row justify-center gap-4"><a href="mailto:builtbyaips@gmail.com?subject=Let%27s%20Talk%20About%20Smart%20AiPS" class="modern-button px-10 py-4 rounded-3xl bg-white text-black font-semibold text-lg flex items-center justify-center gap-x-3"> <span>Email Us</span> </a> <a href="#contact" class="px-10 py-4 rounded-3xl border border-white/30 hover:bg-white/5 font-medium text-lg flex items-center justify-center gap-x-3 transition"> <span>Book a 20-min Call</span> </a>
-     </div>
-     <p class="mt-8 text-sm text-white/50">We typically respond within one business day.</p>
-    </div>
-   </div>
-  </section>
+                <button id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false"
+                        class="md:hidden w-10 h-10 flex items-center justify-center text-white/80 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-white/10 py-12 px-8 text-sm">
-   <div class="max-w-screen-2xl mx-auto">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-y-6">
-     <div class="flex items-center gap-x-4">
-      <div class="flex items-center gap-x-2.5">
-       <div class="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/20"><img class="w-full h-full object-cover" src="AiPSLogoSimp.png" alt="Smart AiPS">
-       </div><span class="font-semibold tracking-tight">Smart AiPS</span>
-      </div>
-      <div class="text-white/40">© 2026 Smart AiPS. All rights reserved.</div>
-     </div>
-     <div class="flex flex-wrap gap-x-8 gap-y-2 text-white/60"><a href="privacy.html" class="hover:text-white transition">Privacy</a> <a href="terms.html" class="hover:text-white transition">Terms</a> <a href="mailto:builtbyaips@gmail.com" class="hover:text-white transition">builtbyaips@gmail.com</a>
-     </div>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-[#0A0A0F]">
+            <div class="px-6 py-6 flex flex-col gap-y-4 text-sm">
+                <a href="#services" class="py-2 text-white/90">Services</a>
+                <a href="#how-we-work" class="py-2 text-white/90">How We Work</a>
+                <a href="#why-us" class="py-2 text-white/90">Why Us</a>
+                <div class="pt-4 flex flex-col gap-y-3">
+                    <button data-aipsy-ask="I'd like to talk to someone" class="py-3 rounded-3xl border border-white/30">Talk to Us</button>
+                    <a href="#contact" class="py-3 text-center rounded-3xl bg-white text-black font-semibold">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="pt-32 pb-16 md:pt-36 md:pb-20 px-6" id="top" data-aipsy-section="Home">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex flex-col items-center text-center max-w-5xl mx-auto">
+
+                <div class="mb-8 mt-4 reveal">
+                    <div class="w-[148px] h-[148px] md:w-[168px] md:h-[168px] mx-auto rounded-[42px] overflow-hidden ring-1 ring-white/10 shadow-2xl logo-glow">
+                        <img src="assets/logo.webp" alt="Smart AiPS" class="brand-mark w-full h-full object-cover" id="hero-logo">
+                    </div>
+                </div>
+
+                <h1 class="heading-font text-6xl md:text-7xl lg:text-[5.25rem] leading-[1.05] tracking-[-3.5px] max-w-[18ch] reveal">
+                    Intelligent automation.<br>
+                    <span class="gradient-text">Real results.</span>
+                </h1>
+
+                <p class="mt-6 max-w-[620px] text-xl text-white/70 leading-relaxed reveal">
+                    We design and build practical AI systems on AWS that reduce manual work,
+                    improve decision-making, and scale with your business.
+                </p>
+
+                <div class="mt-10 flex flex-col sm:flex-row items-center gap-4 reveal">
+                    <button data-aipsy-ask="I want to talk about a project"
+                            class="modern-button w-full sm:w-auto px-9 py-[17px] text-lg font-semibold rounded-3xl bg-white text-black flex items-center justify-center gap-x-3 group">
+                        <span>Start a Conversation</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-0.5 transition"></i>
+                    </button>
+
+                    <a href="#how-we-work"
+                       class="w-full sm:w-auto px-8 py-[17px] text-lg font-medium rounded-3xl border border-white/25 hover:border-white/50 hover:bg-white/5 transition flex items-center justify-center">
+                        See How It Works
+                    </a>
+                </div>
+
+                <p class="mt-6 text-sm text-white/40 reveal">
+                    Or ask Aipsy in the corner — he'll take you to the right section.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <div class="statbar border-y border-white/10 bg-white/[0.015]">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5">
+            <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-10 gap-y-4 text-center md:text-left">
+                <div>
+                    <div class="heading-font text-3xl tracking-tight">AWS</div>
+                    <div class="mono text-[10px] text-white/45 tracking-[1.5px]">CERTIFIED PARTNER</div>
+                </div>
+                <div class="hidden md:block w-px h-8 bg-white/15"></div>
+                <div>
+                    <div class="heading-font text-3xl tracking-tight">100%</div>
+                    <div class="mono text-[10px] text-white/45 tracking-[1.5px]">FOUNDER-LED DELIVERY</div>
+                </div>
+                <div class="hidden md:block w-px h-8 bg-white/15"></div>
+                <div>
+                    <div class="heading-font text-3xl tracking-tight">4&ndash;8 wks</div>
+                    <div class="mono text-[10px] text-white/45 tracking-[1.5px]">TO FIRST VALUE</div>
+                </div>
+                <div class="hidden md:block w-px h-8 bg-white/15"></div>
+                <div class="text-sm max-w-[220px] text-white/60">
+                    We focus on outcomes, not technology theater.
+                </div>
+            </div>
+        </div>
     </div>
-   </div>
-  </footer>
-  <script>
-        function initNavbar() {
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 30) {
-                    navbar.classList.add('nav-scrolled', 'shadow-xl');
-                } else {
-                    navbar.classList.remove('nav-scrolled', 'shadow-xl');
-                }
+
+    <!-- SERVICES -->
+    <section id="services" data-aipsy-section="Services" class="max-w-screen-2xl mx-auto px-8 pt-24 pb-16">
+        <div class="max-w-2xl mb-12">
+            <div class="mono uppercase tracking-[2px] text-[11px] font-medium text-[#00F0FF] mb-3 reveal">WHAT WE BUILD</div>
+            <h2 class="section-header reveal">Practical AI systems<br>that actually work.</h2>
+            <p class="mt-4 text-lg text-white/70 reveal">We don't sell AI hype. We deliver production-grade automation that integrates with how your business already operates.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-8">
+                <div class="w-12 h-12 rounded-2xl bg-[#00F0FF]/10 flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-robot text-[#00F0FF] text-2xl"></i>
+                </div>
+                <h3 class="heading-font text-2xl mb-3">Custom AI Agents</h3>
+                <p class="text-white/70 leading-relaxed">Autonomous or semi-autonomous agents that handle prospect research, production optimization, customer triage, reporting, and complex multi-step workflows.</p>
+                <div class="mt-6 flex items-center justify-between gap-4 flex-wrap">
+                    <div class="mono text-[10px] uppercase tracking-[1.5px] text-white/35">MULTI-AGENT &middot; BEDROCK</div>
+                    <button class="ask-aipsy" data-aipsy-ask="Tell me about your AI agents">Ask Aipsy <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-8">
+                <div class="w-12 h-12 rounded-2xl bg-[#00F0FF]/10 flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-link text-[#00F0FF] text-2xl"></i>
+                </div>
+                <h3 class="heading-font text-2xl mb-3">AWS Automation</h3>
+                <p class="text-white/70 leading-relaxed">Deep integration of AI into your existing systems using Amazon Bedrock, Lambda, Step Functions, and API Gateway. We connect intelligence directly to your operations.</p>
+                <div class="mt-6 flex items-center justify-between gap-4 flex-wrap">
+                    <div class="mono text-[10px] uppercase tracking-[1.5px] text-white/35">LAMBDA &middot; STEP FUNCTIONS</div>
+                    <button class="ask-aipsy" data-aipsy-ask="How do you do AWS automation?">Ask Aipsy <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-8">
+                <div class="w-12 h-12 rounded-2xl bg-[#00F0FF]/10 flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-book text-[#00F0FF] text-2xl"></i>
+                </div>
+                <h3 class="heading-font text-2xl mb-3">RAG Knowledge Systems</h3>
+                <p class="text-white/70 leading-relaxed">Secure, private knowledge bases that let your team query company documents, procedures, specs, and history using natural language — dramatically reducing search time.</p>
+                <div class="mt-6 flex items-center justify-between gap-4 flex-wrap">
+                    <div class="mono text-[10px] uppercase tracking-[1.5px] text-white/35">RETRIEVAL-AUGMENTED</div>
+                    <button class="ask-aipsy" data-aipsy-ask="How does your RAG knowledge base work?">Ask Aipsy <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section id="how-we-work" data-aipsy-section="Process" class="bg-white/[0.015] border-y border-white/10 py-20">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-2xl mb-12">
+                <div class="mono uppercase tracking-[2px] text-[11px] font-medium text-[#00F0FF] mb-3 reveal">OUR PROCESS</div>
+                <h2 class="section-header reveal">Simple. Transparent.<br>Built for results.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+                    <div class="mono text-[#00F0FF] text-sm mb-4">01</div>
+                    <h4 class="heading-font text-xl mb-2">Discovery</h4>
+                    <p class="text-sm text-white/70">We start with your real operational pain points — not generic AI ideas. We map processes, data, and goals.</p>
+                </div>
+
+                <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+                    <div class="mono text-[#00F0FF] text-sm mb-4">02</div>
+                    <h4 class="heading-font text-xl mb-2">Pilot</h4>
+                    <p class="text-sm text-white/70">We build a focused, high-impact pilot in 4–8 weeks so you can see measurable results before committing to a larger rollout.</p>
+                    <button class="ask-aipsy mt-4" data-aipsy-ask="What happens during the pilot?">Ask Aipsy <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+                    <div class="mono text-[#00F0FF] text-sm mb-4">03</div>
+                    <h4 class="heading-font text-xl mb-2">Implement</h4>
+                    <p class="text-sm text-white/70">Full production deployment with proper security, monitoring, documentation, and team training.</p>
+                </div>
+
+                <div class="service-card reveal bg-white/[0.03] border border-white/10 rounded-3xl p-7">
+                    <div class="mono text-[#00F0FF] text-sm mb-4">04</div>
+                    <h4 class="heading-font text-xl mb-2">Support &amp; Evolve</h4>
+                    <p class="text-sm text-white/70">Ongoing optimization, monitoring, and iteration through flexible monthly retainers so the system keeps improving.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section id="why-us" data-aipsy-section="Why us" class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid lg:grid-cols-12 gap-x-12 gap-y-12 items-center">
+
+            <div class="lg:col-span-5">
+                <div class="mono uppercase tracking-[2px] text-[11px] font-medium text-[#00F0FF] mb-3 reveal">WHY SMART AIPS</div>
+                <h2 class="section-header leading-none reveal">We build AI<br>you can actually<br>trust in production.</h2>
+                <p class="mt-6 text-lg text-white/70 reveal">Most AI projects fail not because the technology is bad, but because implementation is poor. We obsess over the details that make systems reliable day after day.</p>
+
+                <div class="mt-8 reveal">
+                    <button data-aipsy-ask="How do you handle security and reliability?"
+                            class="inline-flex items-center gap-x-2 text-sm font-medium group">
+                        <span class="border-b border-white/30 group-hover:border-[#00FF9D] transition-colors">Ask about security and reliability</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-0.5 transition"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7">
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="service-card reveal border border-white/10 rounded-3xl p-7">
+                        <div class="flex items-center gap-x-3 mb-4">
+                            <i class="fa-solid fa-check-double text-[#00FF9D]"></i>
+                            <span class="heading-font text-base">Founder-Led Delivery</span>
+                        </div>
+                        <p class="text-sm text-white/70">You work directly with experienced builders — not junior staff. Every project gets senior attention from day one.</p>
+                    </div>
+
+                    <div class="service-card reveal border border-white/10 rounded-3xl p-7">
+                        <div class="flex items-center gap-x-3 mb-4">
+                            <i class="fa-solid fa-check-double text-[#00FF9D]"></i>
+                            <span class="heading-font text-base">Production First</span>
+                        </div>
+                        <p class="text-sm text-white/70">We design for reliability, security, monitoring, and maintainability from the start — not as an afterthought.</p>
+                    </div>
+
+                    <div class="service-card reveal border border-white/10 rounded-3xl p-7">
+                        <div class="flex items-center gap-x-3 mb-4">
+                            <i class="fa-solid fa-check-double text-[#00FF9D]"></i>
+                            <span class="heading-font text-base">AWS Expertise</span>
+                        </div>
+                        <p class="text-sm text-white/70">Deep, hands-on experience with Amazon Bedrock and the full AWS ecosystem. We build solutions that scale.</p>
+                    </div>
+
+                    <div class="service-card reveal border border-white/10 rounded-3xl p-7">
+                        <div class="flex items-center gap-x-3 mb-4">
+                            <i class="fa-solid fa-check-double text-[#00FF9D]"></i>
+                            <span class="heading-font text-base">Outcome Focused</span>
+                        </div>
+                        <p class="text-sm text-white/70">We measure success by the operational impact we create — time saved, errors reduced, decisions improved.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-aipsy-section="Contact" class="bg-gradient-to-b from-white/[0.02] to-transparent border-t border-white/10 py-20">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="section-header reveal">Ready to build something<br>that actually moves the needle?</h2>
+                <p class="mt-5 text-xl text-white/70 reveal">Let's have a short, no-pressure conversation about your biggest operational challenges.</p>
+
+                <div class="mt-9 flex flex-col sm:flex-row justify-center gap-4 reveal">
+                    <button data-aipsy-ask="I'd like to book a call"
+                            class="modern-button px-10 py-4 rounded-3xl bg-white text-black font-semibold text-lg flex items-center justify-center gap-x-3">
+                        <span>Start with Aipsy</span>
+                        <i class="fa-solid fa-arrow-right text-base"></i>
+                    </button>
+                    <a href="mailto:builtbyaips@gmail.com"
+                       class="px-10 py-4 rounded-3xl border border-white/25 hover:border-white/50 hover:bg-white/5 font-medium text-lg flex items-center justify-center gap-x-3 transition">
+                        Email Us Directly
+                    </a>
+                </div>
+
+                <p class="mt-8 text-sm text-white/45 reveal">Aipsy takes four details and writes the intro email for you. We reply within one business day.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-12 px-8 text-sm">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-y-6">
+                <div class="flex items-center gap-x-4">
+                    <div class="flex items-center gap-x-2.5">
+                        <div class="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/20">
+                            <img src="assets/logo.webp" alt="Smart AiPS" class="brand-mark w-full h-full object-cover">
+                        </div>
+                        <span class="heading-font tracking-tight">Smart AiPS</span>
+                    </div>
+                    <div class="text-white/35">© 2026</div>
+                </div>
+
+                <div class="flex flex-wrap gap-x-8 gap-y-2 text-white/55">
+                    <a href="#" class="hover:text-white transition">Privacy</a>
+                    <a href="#" class="hover:text-white transition">Terms</a>
+                    <a href="mailto:builtbyaips@gmail.com" class="hover:text-white transition">builtbyaips@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+        /* nav shadow + scroll progress */
+        var navbar = document.getElementById("navbar");
+        var progress = document.getElementById("progress");
+        var ticking = false;
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+                var y = window.scrollY;
+                navbar.classList.toggle("nav-scrolled", y > 30);
+                navbar.classList.toggle("shadow-2xl", y > 30);
+                var h = document.documentElement.scrollHeight - window.innerHeight;
+                progress.style.transform = "scaleX(" + (h > 0 ? Math.min(1, y / h) : 0) + ")";
+                ticking = false;
             });
         }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
 
-        function initMobileMenu() {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
-                const icon = btn.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
+        /* mobile menu */
+        var btn = document.getElementById("mobile-menu-btn");
+        var menu = document.getElementById("mobile-menu");
+        btn.addEventListener("click", function () {
+            var open = menu.classList.toggle("hidden") === false;
+            btn.setAttribute("aria-expanded", String(open));
+            var icon = btn.querySelector("i");
+            icon.classList.toggle("fa-bars", !open);
+            icon.classList.toggle("fa-times", open);
+        });
+        menu.querySelectorAll("a, button").forEach(function (link) {
+            link.addEventListener("click", function () {
+                menu.classList.add("hidden");
+                btn.setAttribute("aria-expanded", "false");
+                btn.querySelector("i").classList.add("fa-bars");
+                btn.querySelector("i").classList.remove("fa-times");
             });
+        });
 
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    menu.classList.add('hidden');
-                    btn.querySelector('i').classList.add('fa-bars');
-                    btn.querySelector('i').classList.remove('fa-times');
+        /* smooth scroll with navbar offset */
+        document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+            a.addEventListener("click", function (e) {
+                var id = this.getAttribute("href");
+                if (id === "#") return;
+                var target = document.querySelector(id);
+                if (!target) return;
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.getBoundingClientRect().top + window.scrollY - 80,
+                    behavior: reduce ? "auto" : "smooth"
+                });
+            });
+        });
+
+        /* staggered reveals */
+        var items = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window && !reduce) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var group = entry.target.parentElement;
+                    var peers = group ? Array.prototype.slice.call(group.querySelectorAll(":scope > .reveal")) : [];
+                    var i = Math.max(0, peers.indexOf(entry.target));
+                    entry.target.style.transitionDelay = Math.min(i * 80, 320) + "ms";
+                    entry.target.classList.add("in");
+                    io.unobserve(entry.target);
+                });
+            }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+            items.forEach(function (el) { io.observe(el); });
+        } else {
+            items.forEach(function (el) { el.classList.add("in"); });
+        }
+
+        /* active nav link tracking */
+        var links = Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+        var watched = links
+            .map(function (l) { return document.querySelector(l.getAttribute("href")); })
+            .filter(Boolean);
+        if ("IntersectionObserver" in window && watched.length) {
+            var navIo = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (!e.isIntersecting) return;
+                    links.forEach(function (l) {
+                        l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id);
+                    });
+                });
+            }, { rootMargin: "-45% 0px -45% 0px" });
+            watched.forEach(function (s) { navIo.observe(s); });
+        }
+
+        /* pointer-tracked glow on cards */
+        if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
+            document.querySelectorAll(".service-card").forEach(function (card) {
+                card.addEventListener("pointermove", function (e) {
+                    var r = card.getBoundingClientRect();
+                    card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+                    card.style.setProperty("--my", (e.clientY - r.top) + "px");
                 });
             });
         }
-
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        e.preventDefault();
-                        const offsetPosition = target.getBoundingClientRect().top + window.scrollY - 80;
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    }
-                });
-            });
-        }
-
-        function initializeWebsite() {
-            initNavbar();
-            initMobileMenu();
-            initSmoothScroll();
-
-            const heroLogo = document.getElementById('hero-logo');
-            if (heroLogo) {
-                heroLogo.addEventListener('mouseenter', () => heroLogo.style.transform = 'scale(1.03)');
-                heroLogo.addEventListener('mouseleave', () => heroLogo.style.transform = 'scale(1)');
-            }
-        }
-
-        window.onload = initializeWebsite;
+    })();
     </script>
- </body>
+
+    <script src="smartaips-assistant.js" defer></script>
+</body>
 </html>
